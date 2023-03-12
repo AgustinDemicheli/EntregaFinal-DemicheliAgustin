@@ -1,0 +1,27 @@
+{% extends 'social/layout.html' %}
+{% load static %} 
+{% load humanize %}
+{% block content %}
+<h1>Aquí podrás ver las recetas que subieron nuestro cocineros</h1>
+{% for post in posts %}
+
+<article>
+    <div class="container-article">
+        
+        <img src="{{ post.user.profile.image.url }}">
+        <br>
+        <div>
+            <h2 class="username"><a href="{% url 'profile' post.user.username %}">@{{ post.user.username }}</a></h2>
+            <i class="clock"></i>
+            <div class="post">{{post.title}}
+            <br> {{ post.content }}
+            <br>  <img src='{{post.image.url}}'>
+            
+            </div>
+        </div>
+    </div>
+</article>
+
+{% endfor %}
+
+{% endblock %}
