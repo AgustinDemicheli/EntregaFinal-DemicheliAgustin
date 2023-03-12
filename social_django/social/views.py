@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
-from .forms import UserRegisterForm, PostForm
+from .forms import UserRegisterForm, PostForm, UserEditForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -75,6 +75,34 @@ def posteos(request):
 		'posts':posts
 	}
 	return render(request,'social/posteos.html',context)
+
+def editarPerfil(request):
+
+    user = request.user
+
+    if request.method == 'POST':
+
+        miFormulario = UserEditForm(request.POST)
+
+        if miFormulario.is_valid():
+
+            informacion = miFormulario.cleaned_data
+
+            user.email = informacion['email']
+            user.password1 = informacion['password1']
+            user.password2 = informacion['password2']
+
+
+            user.save()
+
+            return render(request, "social/feed.html")
+
+    else:
+
+        miFormulario = UserEditForm(initial={'email': user.email})
+
+    return render(request, "social/editarPerfil.html", {"miFormulario": miFormulario, "user": user})
+
 
 
 

@@ -1,0 +1,17 @@
+{% extends 'social/layout.html' %}
+{% block content %}
+<h1>Formulario-Editar Perfil</h1>
+<h1> de {{ user }}</h1>
+
+<form action='' method="POST">{% csrf_token %}
+
+    <table>
+
+        {{ miFormulario.as_table }}
+
+    </table>
+
+    <input type="submit", value="Enviar">
+
+</form>
+{% endblock %}
